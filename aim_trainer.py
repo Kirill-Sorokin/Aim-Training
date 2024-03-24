@@ -10,6 +10,7 @@ pygame.display.set_caption("Aim Training")
 TARGET_INCREMENT = 400
 TARGET_EVENT = pygame.USEREVENT
 TARGET_PADDING = 30
+BG_COLOR = (0, 25, 40)
 
 # Adjust to make the program easier or more difficult.
 class Target:
@@ -41,10 +42,17 @@ class Target:
         pygame.draw.circle(win, self.SECOND_COLOR, (self.x, self.y), self.size * 0.4)
         pygame.draw.circle(win, self.COLOR, (self.x, self.y), self.size * 0.2)
 
+def draw(win, targets):
+    win.fill(BG_COLOR)
+
+    for target in targets:
+        target.draw(win)
+
+    pygame.display.update()
 
 def main():
     run = True
-    target = []
+    targets = []
 
     pygame.time.set_timer(TARGET_EVENT, TARGET_INCREMENT)
 
@@ -58,6 +66,10 @@ def main():
                 y = random.randint(TARGET_PADDING, HEIGHT - TARGET_PADDING)
                 target = Target(x, y)
                 target.append(target)
+        for target in targets:
+            target.update()
+
+        draw(WIN, targets)
 
     pygame.quit()
 
