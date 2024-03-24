@@ -2,7 +2,7 @@ import math, random, time
 import pygame
 pygame.init()
 
-WIDTH, HEIGHT = 800, 400
+WIDTH, HEIGHT = 800, 600
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Aim Training")
@@ -77,6 +77,32 @@ def draw_top_bar(win, elapsed_time, targets_pressed, misses):
     win.blit(hits_label, (450, 5))
     win.blit(lives_label, (650, 5))
 
+def end_screen(win, elasped_time, targets_pressed, clicks):
+    win.fill(BG_COLOR)
+    time_label = LABEL_FONT.render(f"Time: {format_time(elasped_time)}", 1, "white")
+
+    speed = round(targets_pressed/elasped_time, 1)
+    speed_label = LABEL_FONT.render(f"Speed: {speed} t/s", 1, "white")
+    hits_label = LABEL_FONT.render(f"Hits: {targets_pressed}", 1, "white")
+    accuracy = round(targets_pressed / clicks * 100, 1)
+    accurary_label = LABEL_FONT.render(f"Accuracy: {accuracy}%", 1, "white")
+
+    win.blit(time_label, (get_middle(time_label), 100))
+    win.blit(speed_label, (get_middle(speed_label), 200))
+    win.blit(hits_label, (get_middle(hits_label), 300))
+    win.blit(accurary_label, (get_middle(accurary_label), 400))
+
+    pygame.display.update()
+
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+                quit()
+
+def get_middle(surface):
+    return WIDTH / 2 - surface.get_width()/2
+
 
 def main():
     run = True
@@ -122,7 +148,7 @@ def main():
                 targets.remove(target)
                 targets_pressed += 1
         if misses >= LIVES:
-            pass # end game
+            end_screen(WIN, elapsed_time, targets_pressed, clicks)
 
         draw(WIN, targets)
         draw_top_bar(WIN, elapsed_time, targets_pressed, misses)
