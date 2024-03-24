@@ -53,10 +53,12 @@ def draw(win, targets):
 def main():
     run = True
     targets = []
+    clock = pygame.time.Clock()
 
     pygame.time.set_timer(TARGET_EVENT, TARGET_INCREMENT)
 
     while run:
+        clock.tick(60) # run this while loop at 60fps
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -65,7 +67,8 @@ def main():
                 x = random.randint(TARGET_PADDING, WIDTH - TARGET_PADDING)
                 y = random.randint(TARGET_PADDING, HEIGHT - TARGET_PADDING)
                 target = Target(x, y)
-                target.append(target)
+                targets.append(target)
+        # update the targets appearing on screen.
         for target in targets:
             target.update()
 
