@@ -7,6 +7,10 @@ WIDTH, HEIGHT = 600, 400
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Aim Training")
 
+TARGET_INCREMENT = 400
+TARGET_EVENT = pygame.USEREVENT
+TARGET_PADDING = 30
+
 # Adjust to make the program easier or more difficult.
 class Target:
     MAX_SIZE = 30
@@ -40,12 +44,20 @@ class Target:
 
 def main():
     run = True
+    target = []
+
+    pygame.time.set_timer(TARGET_EVENT, TARGET_INCREMENT)
 
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
+            if event.type == TARGET_EVENT:
+                x = random.randint(TARGET_PADDING, WIDTH - TARGET_PADDING)
+                y = random.randint(TARGET_PADDING, HEIGHT - TARGET_PADDING)
+                target = Target(x, y)
+                target.append(target)
 
     pygame.quit()
 
