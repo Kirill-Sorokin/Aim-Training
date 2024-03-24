@@ -1,6 +1,4 @@
-import math
-import random
-import time
+import math, random, time
 import pygame
 pygame.init()
 
@@ -8,6 +6,28 @@ WIDTH, HEIGHT = 600, 400
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Aim Training")
+
+# Adjust to make the program easier or more difficult.
+class Target:
+    MAX_SIZE = 30
+    GROWTH_RATE = 0.2
+    COLOR = "red"
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.size = 0
+        self.grow = True
+
+    def update(self):
+        if self.size + self.GROWTH_RATE >= self.MAX_SIZE:
+            self.grow = False
+
+        if self.grow:
+            self.size += self.GROWTH_RATE
+        else:
+            self.size -= self.GROWTH_RATE
+
 
 def main():
     run = True
