@@ -14,7 +14,7 @@ BG_COLOR = (0, 25, 40)
 LIVES = 3
 TOP_BAR_HEIGHT = 50
 
-LABEL_FONT = pygame.font.SysFont("comicsans", 24)
+LABEL_FONT = pygame.font.SysFont("calibri", 24)
 
 # Adjust to make the program easier or more difficult.
 class Target:
@@ -103,7 +103,7 @@ def main():
                 break
             if event.type == TARGET_EVENT:
                 x = random.randint(TARGET_PADDING, WIDTH - TARGET_PADDING)
-                y = random.randint(TARGET_PADDING, HEIGHT - TARGET_PADDING)
+                y = random.randint(TARGET_PADDING + TOP_BAR_HEIGHT, HEIGHT - TARGET_PADDING)
                 target = Target(x, y)
                 targets.append(target)
             if event.type == pygame.MOUSEBUTTONDOWN:
